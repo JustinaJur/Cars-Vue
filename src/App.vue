@@ -1,19 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header msg="Cars" />
+    <Card :cars="cars" :addCar="addCar" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Card from "./components/Card.vue";
+import Header from "./components/Header.vue";
+import { getCars } from "./api/api.js";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Card,
+    Header
+  },
+  data() {
+    return {
+      cars: []
+    };
+  },
+  mounted() {
+    this.addCar();
+  },
+
+  methods: {
+    async addCar() {
+      const car = await getCars();
+      this.cars = [...this.cars, car];
+    }
   }
-}
+};
 </script>
 
 <style>
